@@ -7,6 +7,10 @@ import Servicios from "../pages/Servicios/Servicios";
 import Contacto from "../pages/Contacto";
 import Checkout from "../pages/Checkout/Checkout";
 import Cursos from "../pages/Cursos/Cursos";
+import Autogestion from "../pages/Autogestion/Autogestion";
+import Dashboard from "../pages/Dashboard/Dashboard";
+
+
 
 import Menu from "./Navbar";
 import CursoDetailContainer from "../pages/Cursos/CursoDetailContainer";
@@ -22,6 +26,8 @@ const Main = () =>{
                     <Route exact path="/contacto" element={<Contacto/>}/>
                     <Route exact path="/checkout" element={<Checkout/>}/>
                     <Route exact path="/tienda" element={<Cursos/>}/>
+                    <Route exact path="/autogestion" element={<Autogestion/>}/>
+                    <Route exact path="/dashboard" element={<Dashboard/>}/>
                     <Route exact path="/" element={<Home/>}/>
 
                     <Route exact path="/tienda/:cursoId" element={<Cursos/>}/>

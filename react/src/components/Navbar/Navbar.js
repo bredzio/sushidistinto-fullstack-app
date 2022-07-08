@@ -39,6 +39,14 @@ const Menu = () =>{
                                 </li>
 
                                 <li className='nav-item'>
+                                    <MyLink to="/autogestion">Autogestión</MyLink>
+                                </li>
+
+                                <li className='nav-item'>
+                                    <MyLink to="/dashboard">Dashboard</MyLink>
+                                </li>
+
+                                <li className='nav-item'>
                                     <Link to="/checkout" hidden={cantidadCart() ===0 ? "hidden": ""}><Cart></Cart></Link>
                                 </li>
                         </MyUl>
