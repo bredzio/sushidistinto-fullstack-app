@@ -1,60 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import AgregarCurso from './AgregarCurso.js';
+import ModalGenerico from './ModalGenerico.js';
+import TableOfCourses from './TableOfCourses';
+import DashboardContext from './DashboardContext.js';
+import EditarCurso from './EditarCurso.js';
+
+const URI = 'http://localhost:8000/cursos/';
 
 function DashboardContainer(){
+    const [cursos, setCursos] = useState([]);
+    const [editable, setEditable] = useState(null);
+    const [estadoModalAgregar, setEstadoModalAgregar] = useState(false);
+
+    const handleAgregar = () => {
+        setEstadoModalAgregar(true);
+    }
+
     return(
-        <>
+        <DashboardContext.Provider value={{cursos, setCursos, editable, setEditable, URI}}>
 
-        <ContainerAutogestion className="div-form">
-                    <form  id="form" name="form">
-                        <div className="elemento">
-                            <MyInput type="email" id="email" name="email" required placeholder="Ingrese su email"/>
-                        </div>
-                        
-                        <div className="elemento">
-                            <MyInput type="password" name="password" placeholder="Ingrese su contraseña" required/>
-                        </div>  
-
-                        <div className="elemento">
-                            <MyBottonSubmit type="submit" value="Ingresar"/>
-                            <MyBottonReset type="reset" value="Limpiar"/>
-                        </div>    
-                    </form>  
+            <ContainerAutogestion>
+                <MyTableTitle>Gestión de cursos</MyTableTitle>
+                <MyTableSubtitle style={{color: 'black'}}>Administre facilmente los cursos que se ofrecerán a los clientes:</MyTableSubtitle>
+                <MyButtonAgregar onClick={handleAgregar}>Agregar Curso</MyButtonAgregar>
+                {cursos &&
+                    <TableOfCourses></TableOfCourses>
+                }
+                <ModalGenerico title='Ingrese datos del curso' estado={estadoModalAgregar} setEstado={setEstadoModalAgregar}>
+                    <AgregarCurso estadoModal={estadoModalAgregar} setEstadoModal={setEstadoModalAgregar}/>
+                </ModalGenerico>
+                <ModalGenerico title='Edite datos del curso' estado={editable} setEstado={setEditable}>
+                    <EditarCurso estadoModal={editable} setEstadoModal={setEditable}/>
+                </ModalGenerico>
             </ContainerAutogestion>
-
-        </>
+        </DashboardContext.Provider>
     );
 }
 export default DashboardContainer;
 
 const ContainerAutogestion=styled.div`
     display: flex;
+    flex-direction: column;
     align-items:center;
     justify-content:center;
     flex-wrap: wrap;
     margin:150px 50px;
-    gap:50px;
+    gap:30px;
+    color: black;
 `;
 
-const MyInput = styled.input`
-    margin: 1rem 0;
-    width:90%;
-    padding: 1rem;  
-    color: gray;
-    border-radius: 5px;
-    border-color: gainsboro;
-    font-size: 20px;
-`;
+const MyTableTitle = styled.h1`
+    color: black;
+`
 
-const MyBottonSubmit = styled.input`
+const MyTableSubtitle = styled.p`
+    color: black;
+`
+
+const MyButtonAgregar = styled.button`
     background-color: none;
     border:2px solid black;
     color: #000;        
     text-transform: uppercase;
     cursor: pointer;
-    padding: 1rem;
-    margin-top: 2rem;   
-    width: 7rem;
+    padding: 1rem 2rem;
+    margin-top: 1rem;   
     font-size: 1rem;
     font-weight: bold;    
     border-radius: 50px;

@@ -51,7 +51,11 @@ export const getCursosByCategoria = async (req, res) => {
           if(!req){
                return res.status(400).json('Request inválida');
           }
-           await CursoModel.create(req.body);
+          console.log("REQ BODY", req.body);
+          delete req.body.id;
+          const fechaHoy = new Date();
+          const nuevoCurso = {...req.body, ...{createdAt: fechaHoy, updatedAt: fechaHoy}}
+           await CursoModel.create(nuevoCurso);
            res.status(200).json('Registro creado exitosamente')
       } catch (error) {
            res.json({message: error.message})
@@ -62,7 +66,9 @@ export const getCursosByCategoria = async (req, res) => {
  export const updateCurso = async (req, res) => {
       try {
           const id = req.params.id
-          await CursoModel.updateOne({_id:id}, req.body)
+          const fechaHoy = new Date();
+          const cursoEditado = {...req.body, ...{updatedAt: fechaHoy}}
+          await CursoModel.updateOne({_id:id}, cursoEditado)
           res.status(200).json({
                "message":'Registro actualizado exitosamente'
           })
@@ -71,7 +77,7 @@ export const getCursosByCategoria = async (req, res) => {
       }
  }
 
-// //Eliminar un registro
+ //Eliminar un registro
  export const deleteCurso = async (req, res) => {
       try {
           const id = req.params.id
