@@ -6,7 +6,7 @@ import DashboardContainer from '../../../components/pages/Dashboard/DashboardCon
 
 function Dashboard(){
     return(
-        <>    
+        <>        
             <Titulo title="Panel de control" fondo={fondo}/>
             <DashboardContainer/>
         </>
