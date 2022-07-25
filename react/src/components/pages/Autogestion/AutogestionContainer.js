@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useState, useEffect, useContext } from "react";
 import loginService from './../../../services/login.js';
 import {CartContext} from '../../context/CartContext.js';
+import {Navigate} from 'react-router-dom';
+
 
 
 function AutogestionContainer(){
@@ -17,8 +19,13 @@ function AutogestionContainer(){
         if(loggedAppUser){
             const token = JSON.parse(loggedAppUser);
             setToken(token);
+            return <Navigate to='/dashboard'/>
         }
     },[])
+
+    if(localStorage.getItem('loggedAppUser')){
+        return <Navigate to='/dashboard'/>
+    }
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -32,9 +39,10 @@ function AutogestionContainer(){
                 'loggedAppUser', JSON.stringify(user)
             )
 
-            setUser(user);
+            setToken(user);
             setUsername('');
             setPassword('');
+            
         }catch(e){
            console.error(e);
         }
