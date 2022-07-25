@@ -9,7 +9,7 @@ import { CartContext } from '../context/CartContext';
 import { Link, NavLink } from "react-router-dom";
 
 const Menu = () =>{
-    const {cantidadCart}=useContext(CartContext);
+    const {cantidadCart, verificarToken }=useContext(CartContext);
 
     return(
         <MyHeader>
@@ -39,15 +39,16 @@ const Menu = () =>{
                                 </li>
 
                                 <li className='nav-item'>
-                                    <MyLink to="/autogestion">Autogestión</MyLink>
+                                    <MyLink to="/autogestion" hidden={verificarToken()}>Login</MyLink>
+                                </li>
+
+
+                                <li className='nav-item'>
+                                    <MyLink to="/dashboard" hidden={!verificarToken() ? "hidden": ""}>Dashboard</MyLink>
                                 </li>
 
                                 <li className='nav-item'>
-                                    <MyLink to="/dashboard">Dashboard</MyLink>
-                                </li>
-
-                                <li className='nav-item'>
-                                    <Link to="/checkout" hidden={cantidadCart() ===0 ? "hidden": ""}><Cart></Cart></Link>
+                                    <Link to="/checkout" hidden={cantidadCart()===0 ? "hidden": ""}><Cart></Cart></Link>
                                 </li>
                         </MyUl>
                     </div>

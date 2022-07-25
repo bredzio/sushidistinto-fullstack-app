@@ -8,7 +8,11 @@ const cursoSchema = new Schema (
      price: {type: Number},
      category: {type:String},
      createdAt: {type:Date},
-     updatedAt: {type:Date}
+     updatedAt: {type:Date},
+     user:{
+          type: Schema.Types.ObjectId,
+          ref: 'User'
+     }
      }
 )
 

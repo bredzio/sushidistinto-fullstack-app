@@ -9,9 +9,9 @@ export const CartProvider =({children})=>{
   const [cart, setCart]=useState([])
 
   const [idPago, setIdPago] = useState('')
+  const [token, setToken] = useState('')
 
-
-    const agregarAlCarrito=(item)=>{
+  const agregarAlCarrito=(item)=>{
       setCart( [...cart, item] )
     }
 
@@ -33,6 +33,14 @@ export const CartProvider =({children})=>{
       return cart.reduce((acc, prod)=>acc+prod.cantidad,0)
     }
 
+    const verificarToken=()=>{      
+      if(token){
+        return true
+      }else{
+        return false
+      }
+    }
+
     const valorTotal=()=>{
       return cart.reduce((acc,prod)=>acc+prod.cantidad * prod.price,0)
     }
@@ -46,8 +54,7 @@ export const CartProvider =({children})=>{
     }
     
     return(
-        <CartContext.Provider value={{cart,idPago, setIdPago, agregarAlCarrito,agregarComprador, isInCart, cantidadCart,valorTotal, vaciarCarrito, eliminarItem, comprador}}>
-
+        <CartContext.Provider value={{cart,idPago, setIdPago, agregarAlCarrito,agregarComprador, isInCart, cantidadCart,valorTotal, vaciarCarrito, eliminarItem, comprador, setToken, verificarToken}}>
         {children}
         </CartContext.Provider>
 
