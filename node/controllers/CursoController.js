@@ -14,7 +14,6 @@ export const getAllCursos = async (req, res) => {
                res.json(cursos)
           })
      }
-     
 }
 
 //Mostrar un registro

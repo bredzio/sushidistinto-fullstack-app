@@ -1,18 +1,72 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useState, useEffect, useContext } from "react";
+import loginService from './../../../services/login.js';
+import {CartContext} from '../../context/CartContext.js';
+
 
 function AutogestionContainer(){
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [user, setUser] = useState(null);
+    const {setToken} = useContext(CartContext)
+
+
+    useEffect(()=>{
+        const loggedAppUser = window.localStorage.getItem('loggedAppUser')
+        if(loggedAppUser){
+            const token = JSON.parse(loggedAppUser);
+            setToken(token);
+        }
+    },[])
+
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        try{
+            const user = await loginService.login({
+                username,
+                password
+            })
+
+            window.localStorage.setItem(
+                'loggedAppUser', JSON.stringify(user)
+            )
+
+            setUser(user);
+            setUsername('');
+            setPassword('');
+        }catch(e){
+           console.error(e);
+        }
+    }
+
     return(
         <>
 
         <ContainerAutogestion className="div-form">
-                    <form  id="form" name="form">
+                    <form  id="form" name="form" onSubmit={handleLogin}>
                         <div className="elemento">
-                            <MyInput type="email" id="email" name="email" required placeholder="Ingrese su email"/>
+                            <MyInput 
+                                type="email" 
+                                id="username" 
+                                value={username}
+                                name="Username" 
+                                required 
+                                placeholder="Ingrese su email"
+                                onChange={({target})=> setUsername(target.value)}
+                            />
                         </div>
                         
                         <div className="elemento">
-                            <MyInput type="password" name="password" placeholder="Ingrese su contraseña" required/>
+                            <MyInput 
+                                type="password" 
+                                id="password" 
+                                value={password}
+                                name="Password" 
+                                required 
+                                placeholder="Ingrese su contraseña"
+                                onChange={({target})=> setPassword(target.value)}
+                            />    
                         </div>  
 
                         <div className="elemento">

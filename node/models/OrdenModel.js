@@ -6,7 +6,11 @@ const ordenSchema = new Schema (
      comprador: {type:Object},
      items : {type: Array},
      timeStamp: {type:Date},
-     total: {type:Number}
+     total: {type:Number},
+     user:{
+          type: Schema.Types.ObjectId,
+          ref: 'User'
+     }
      }
 )
 
